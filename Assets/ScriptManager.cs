@@ -6,10 +6,24 @@ using TMPro;
 
 public class ScriptManager : MonoBehaviour
 {
+    public StringDisplay stringDisplay;
     public TextMeshProUGUI InputStrings;
+    
+    public TextMeshProUGUI StandardText;
+    public TextMeshProUGUI creditText;
+    public TextMeshProUGUI classesText;
+    public TextMeshProUGUI internalExternalText;
+    public TextMeshProUGUI readWriteText;
+    public TextMeshProUGUI dueDateText;
+    public TextMeshProUGUI titleText;
 
-    public string[,] StandardIndex = new string [2, 11];
-    public string[] nceaClasses = {"Accounting", "Algebra/Calculus", "Art", "Business", "Chemistry", "Biology", "Dance", "Digital Technology", "Drama", "DVC", "Economics", "English", "French", "Geography", "Health", "History", "Media Studies", "Music", "Physical Education", "Physics", "Psychology", "Science", "Social Studies", "Te Reo Maori", "Textiles"};
+    public GameObject StandardStringPrefab;
+
+    public GameObject[] rowpos = new GameObject [10];
+    public GameObject[] gradeDesign = new GameObject [5];
+
+    public string[,] StandardIndex = new string [10, 11];
+    public string[] nceaClasses = {"Accounting", "Algebra/Calculus", "Art", "Business", "Chemistry", "Biology", "Dance", "Digital Technology", "Drama", "DVC", "Economics", "English", "French", "Geography", "Health", "History", "Media Studies", "Music", "Outdoor Education", "Physical Education", "Physics", "Psychology", "Science", "Social Studies", "Te Reo Maori", "Textiles"};
     /* 
     in order: 
     standard number,
@@ -36,17 +50,20 @@ public class ScriptManager : MonoBehaviour
 
     public string titleInput;
     public string dueDateInput;
+    public int doneInput;
+    public int gradeInput;
+    public int hypotheticalInput;
     public int inputRow;
 
     string stringInput;
-    // AS 92247
+
     public void ReadStandardNumber(string info)
     {
         Int32.TryParse(info, out assesmentStandard);
         Debug.Log(assesmentStandard);
 
     }
-    // WORTH 4 CREDITS
+
     public void ReadCreditValue(string info)
     {
         Int32.TryParse(info, out creditValue);
@@ -73,7 +90,6 @@ public class ScriptManager : MonoBehaviour
         writeInput = Convert.ToInt32(write);
     }
 
-    //DEMONSTRATE UNDERSTSNDING
     public void ReadTitle(string info)
     {
         titleInput = info;
@@ -84,11 +100,25 @@ public class ScriptManager : MonoBehaviour
         dueDateInput = info;
     }
 
+    public void ReadDoneInput(bool info)
+    {
+        doneInput = Convert.ToInt32(info);
+    }
+
+    public void ReadGrade(int info)
+    {
+        gradeInput = info;
+    }
+
+    public void ReadHypotheticalInput(bool info)
+    {
+        hypotheticalInput = Convert.ToInt32(info);
+    }
 
     public void ReadRow(string info)
     {
         Int32.TryParse(info, out inputRow);
-        Debug.Log(inputRow);
+        Debug.Log("inputRow: "+inputRow );
     }
 
     public void WriteData()
@@ -100,26 +130,50 @@ public class ScriptManager : MonoBehaviour
        StandardIndex[inputRow, 4] = readOrWriteIndex[readInput, writeInput];
        StandardIndex[inputRow, 5] = dueDateInput;
        StandardIndex[inputRow, 6] = titleInput;
+       StandardIndex[inputRow, 7] = doneInput.ToString();
+       StandardIndex[inputRow, 8] = gradeInput.ToString();
+       StandardIndex[inputRow, 9] = hypotheticalInput.ToString();
+
 
 
        UpdateDebug();
+       SpawnStandard();
     }
 
-    public void SpawnStandard(int assesmentStandard, int creditValue)
+    public void SpawnStandard()
     {
-
-
+        for (int i = 0; i < 8; i++)
+        {
+            if (Convert.ToInt32(StandardIndex[i, 1]) > 0)
+            {
+                StandardText.text = StandardIndex[i, 0];
+                creditText.text = StandardIndex[i, 1];
+                classesText.text = StandardIndex[i, 2];
+                internalExternalText.text = StandardIndex[i, 3];
+                readWriteText.text = StandardIndex[i, 4];
+                dueDateText.text = StandardIndex[i, 5];
+                titleText.text = StandardIndex[i, 6];
+                
+                stringDisplay.CopyStandard(i, Convert.ToInt32(StandardIndex[i, 8]));
+            }
+        }
     }
 
     public void UpdateDebug()
     {
         InputStrings.text = "Input Strings\n";
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 5; i++)
         {
             for (int k = 0; k < 11; k++)
             {
-                InputStrings.text += StandardIndex[i, k] + ", ";
+                InputStrings.text += StandardIndex[i, k] + " || ";
             } 
+            InputStrings.text += "\n";
         }
+    }
+
+    public void FinishedEdit()
+    {
+
     }
 }
