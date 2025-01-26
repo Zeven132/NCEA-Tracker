@@ -44,6 +44,7 @@ public class ScriptManager : MonoBehaviour
     public TextMeshProUGUI hypotheticalText;
     public TextMeshProUGUI CountDown; 
     public TextMeshProUGUI ClassesText;
+    public TextMeshProUGUI ClassesNameText;
 
     public TextMeshProUGUI ArchiveMsg;
 
@@ -230,7 +231,7 @@ public class ScriptManager : MonoBehaviour
 
     public void SpawnStandard()
     {
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 10; i++)
         {
             if (Convert.ToInt32(StandardIndex[i, 1]) > 0)
             {
@@ -381,6 +382,7 @@ public class ScriptManager : MonoBehaviour
 
         CreditsTotalText.text = "";
         ClassesText.text = "";
+        ClassesNameText.text = "";
 
         for (int i = 0; i < 6; i++)
         {
@@ -707,9 +709,9 @@ public class ScriptManager : MonoBehaviour
         CreditsOpt += CreditsAndHypo + Inprogress;
 
         CreditsTotalText.text = ""+
-        CreditsTotal+"   |   "+ExcellenceCredits+"   |   "+MeritCredits+"   |   "+AchievedCredits+"   |   "+NotAchievedCredits+"\n"+
-        CreditsAndHypo+"   |   "+ExcellenceAndHypo+"   |   "+MeritAndHypo+"   |   "+AchievedAndHypo+"   |   "+NotAchievedAndHypo+"\n"+
-        CreditsOpt+"   |   "+ExcellenceOpt+"   |   "+MeritOpt+"   |   "+AchievedOpt+"   |   "+NotAchievedOpt;
+        CreditsTotal+"      "+ExcellenceCredits+"       "+MeritCredits+"       "+AchievedCredits+"       "+NotAchievedCredits+"\n"+
+        CreditsAndHypo+"      "+ExcellenceAndHypo+"       "+MeritAndHypo+"       "+AchievedAndHypo+"       "+NotAchievedAndHypo+"\n"+
+        CreditsOpt+"      "+ExcellenceOpt+"      "+MeritOpt+"      "+AchievedOpt+"      "+NotAchievedOpt;
 
         CountDown.text = ""+
         (60-CreditsTotal)+"\n"+
@@ -720,7 +722,8 @@ public class ScriptManager : MonoBehaviour
         {
             if (statsClasses[i] != "")
             {
-                ClassesText.text += "Credits in "+statsClasses[i]+"\t\t"+statsClassesCredits[i, 0]+" | "+statsClassesCredits[i, 1]+" | "+statsClassesCredits[i, 2]+" | "+statsClassesCredits[i, 3]+" | "+statsClassesCredits[i, 4];
+                ClassesNameText.text += ""+statsClasses[i]+"\n";
+                ClassesText.text += ""+statsClassesCredits[i, 0]+"       "+statsClassesCredits[i, 1]+"       "+statsClassesCredits[i, 2]+"       "+statsClassesCredits[i, 3]+"       "+statsClassesCredits[i, 4];
                 ClassesText.text += "\n";
             }
             
